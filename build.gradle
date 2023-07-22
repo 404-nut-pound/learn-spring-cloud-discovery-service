@@ -21,6 +21,19 @@ repositories {
   mavenCentral()
 }
 
+gradle.taskGraph.beforeTask { Task task ->
+  println "$task Start at " + new Date().format("yyyy-MM-dd HH:mm:ss")
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+  if (state.failure) {
+    println "$task Failed at " + new Date().format("yyyy-MM-dd HH:mm:ss")
+  }
+  else {
+    println "$task Done at " + new Date().format("yyyy-MM-dd HH:mm:ss")
+  }
+}
+
 ext {
   set("springCloudVersion", "2022.0.3")
 }
